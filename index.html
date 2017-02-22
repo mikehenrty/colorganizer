@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang=en>
+<head>
+
+<meta charset=utf-8>
+<title>Colorganizer</title>
+</head>
+<body>
+  <script>
+const SIZE = 8;
+const ROTATE_SPEED = 0.3;
+const SCALE_SPEED = 0.1;
+
+document.body.style.margin = '0';
+document.body.style.backgroundColor = '#1E023F';
+document.body.style.fontSize = '2vmin';
+
+let content = document.createElement('div');
+content.style.height = '100vmin';
+content.style.width = '100vmin';
+content.style.backgroundColor = '';
+content.style.border = '2px solid white';
+content.style.margin = 'auto';
+content.style.position = 'relative';
+content.style.transformStyle = 'preserve-3d';
+document.body.appendChild(content);
+
+let colours = [{"name":"aliceblue","values":[240,248,255]},{"name":"antiquewhite","values":[250,235,215]},{"name":"aqua","values":[0,255,255]},{"name":"aquamarine","values":[127,255,212]},{"name":"azure","values":[240,255,255]},{"name":"beige","values":[245,245,220]},{"name":"bisque","values":[255,228,196]},{"name":"black","values":[0,0,0]},{"name":"blanchedalmond","values":[255,235,205]},{"name":"blue","values":[0,0,255]},{"name":"blueviolet","values":[138,43,226]},{"name":"brown","values":[165,42,42]},{"name":"burlywood","values":[222,184,135]},{"name":"cadetblue","values":[95,158,160]},{"name":"chartreuse","values":[127,255,0]},{"name":"chocolate","values":[210,105,30]},{"name":"coral","values":[255,127,80]},{"name":"cornflowerblue","values":[100,149,237]},{"name":"cornsilk","values":[255,248,220]},{"name":"crimson","values":[220,20,60]},{"name":"cyan","values":[0,255,255]},{"name":"deeppink","values":[255,20,147]},{"name":"deepskyblue","values":[0,191,255]},{"name":"dimgray","values":[105,105,105]},{"name":"dimgrey","values":[105,105,105]},{"name":"dodgerblue","values":[30,144,255]},{"name":"firebrick","values":[178,34,34]},{"name":"floralwhite","values":[255,250,240]},{"name":"forestgreen","values":[34,139,34]},{"name":"fuchsia","values":[255,0,255]},{"name":"gainsboro","values":[220,220,220]},{"name":"ghostwhite","values":[248,248,255]},{"name":"gold","values":[255,215,0]},{"name":"goldenrod","values":[218,165,32]},{"name":"gray","values":[128,128,128]},{"name":"green","values":[0,128,0]},{"name":"greenyellow","values":[173,255,47]},{"name":"grey","values":[128,128,128]},{"name":"honeydew","values":[240,255,240]},{"name":"hotpink","values":[255,105,180]},{"name":"indianred","values":[205,92,92]},{"name":"indigo","values":[75,0,130]},{"name":"ivory","values":[255,255,240]},{"name":"khaki","values":[240,230,140]},{"name":"lavender","values":[230,230,250]},{"name":"lavenderblush","values":[255,240,245]},{"name":"lawngreen","values":[124,252,0]},{"name":"lemonchiffon","values":[255,250,205]},{"name":"lime","values":[0,255,0]},{"name":"limegreen","values":[50,205,50]},{"name":"linen","values":[250,240,230]},{"name":"magenta","values":[255,0,255]},{"name":"maroon","values":[128,0,0]},{"name":"midnightblue","values":[25,25,112]},{"name":"mintcream","values":[245,255,250]},{"name":"mistyrose","values":[255,228,225]},{"name":"moccasin","values":[255,228,181]},{"name":"navajowhite","values":[255,222,173]},{"name":"navy","values":[0,0,128]},{"name":"oldlace","values":[253,245,230]},{"name":"olive","values":[128,128,0]},{"name":"olivedrab","values":[107,142,35]},{"name":"orange","values":[255,165,0]},{"name":"orangered","values":[255,69,0]},{"name":"orchid","values":[218,112,214]},{"name":"papayawhip","values":[255,239,213]},{"name":"peachpuff","values":[255,218,185]},{"name":"peru","values":[205,133,63]},{"name":"pink","values":[255,192,203]},{"name":"plum","values":[221,160,221]},{"name":"powderblue","values":[176,224,230]},{"name":"purple","values":[128,0,128]},{"name":"rebeccapurple","values":[102,51,153]},{"name":"red","values":[255,0,0]},{"name":"rosybrown","values":[188,143,143]},{"name":"royalblue","values":[65,105,225]},{"name":"saddlebrown","values":[139,69,19]},{"name":"salmon","values":[250,128,114]},{"name":"sandybrown","values":[244,164,96]},{"name":"seagreen","values":[46,139,87]},{"name":"seashell","values":[255,245,238]},{"name":"sienna","values":[160,82,45]},{"name":"silver","values":[192,192,192]},{"name":"skyblue","values":[135,206,235]},{"name":"slateblue","values":[106,90,205]},{"name":"slategray","values":[112,128,144]},{"name":"slategrey","values":[112,128,144]},{"name":"snow","values":[255,250,250]},{"name":"springgreen","values":[0,255,127]},{"name":"steelblue","values":[70,130,180]},{"name":"tan","values":[210,180,140]},{"name":"teal","values":[0,128,128]},{"name":"thistle","values":[216,191,216]},{"name":"tomato","values":[255,99,71]},{"name":"turquoise","values":[64,224,208]},{"name":"violet","values":[238,130,238]},{"name":"wheat","values":[245,222,179]},{"name":"white","values":[255,255,255]},{"name":"whitesmoke","values":[245,245,245]},{"name":"yellow","values":[255,255,0]},{"name":"yellowgreen","values":[154,205,50]}];
+
+colours.forEach(function (c) {
+  let box = document.createElement('div');
+  box.style.height = box.style.width = SIZE + 'vmin';
+  box.style.backgroundColor = c.name;
+  box.style.position = 'absolute';
+  let x = Math.round(c.values[0] / 255 * (100 - SIZE));
+  let y = Math.round(c.values[2] / 255 * (100 - SIZE));
+  let z = Math.round(c.values[1] / 255 * (100 - SIZE) / 2);
+  box.style.transform = 'translateX(' + x + 'vmin) ' +
+                        'translateY(' + y + 'vmin) ' +
+                        'translateZ(' + z + 'vmin)';
+  box.textContent = c.name;
+  content.appendChild(box);
+});
+
+let scale = 0.6;
+let perspective = 300;
+let rotateX = 60;
+let rotateZ = 30;
+
+function setPerspective() {
+  content.style.transform = 'scale(' + scale + ') ' +
+                            'perspective(' + perspective + 'vmin) ' +
+                            'rotateX(' + rotateX + 'deg) ' +
+                            'rotateZ(' + rotateZ + 'deg)';
+}
+setPerspective();
+
+let lastX = 0;
+let lastY = 0;
+function rotate(evt) {
+  let diffX = evt.clientX - lastX;
+  lastX = evt.clientX;
+  let diffY = evt.clientY - lastY;
+  lastY = evt.clientY;
+
+  rotateX -= diffY * ROTATE_SPEED;
+  rotateZ -= diffX * ROTATE_SPEED;
+  setPerspective();
+}
+
+document.body.addEventListener('mousedown', function(evt) {
+  lastX = evt.clientX;
+  lastY = evt.clientY;
+  document.body.addEventListener('mousemove', rotate);
+});
+
+document.body.addEventListener('mouseup', function(evt) {
+  document.body.removeEventListener("mousemove", rotate);
+});
+
+window.addEventListener('wheel', function(evt) {
+  perspective += evt.deltaY * SCALE_SPEED;
+  setPerspective();
+});
+</script></body>
+</html>
