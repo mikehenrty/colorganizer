@@ -1,0 +1,17 @@
+{
+  "name": "colorganizer",
+  "version": "1.0.0",
+  "description": "Organize named colours into a 2d grid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Ford <jhford@mozilla.com>",
+  "license": "ISC",
+  "dependencies": {
+    "bitwise": "^0.2.0",
+    "canvas": "^1.6.3",
+    "color": "^1.0.3",
+    "color-name": "^1.1.1"
+  }
+}
