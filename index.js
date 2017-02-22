@@ -6,16 +6,16 @@ let fs = require('fs');
 
 
 function positionColour(r, g, b) {
-  let x = r;
-  let y = b;
+  let x = r / 2;
+  let y = b / 2;
   let green = bitwise.readByte(g);
 
   let greenshift = bitwise.and(green, [1,1,1,1,0,0,0,0]);
   greenshift = bitwise.writeByte(greenshift) >> 4;
   console.log(greenshift);
 
-  x += greenshift;
-  y += bitwise.writeByte(bitwise.and(green, [0,0,0,0,1,1,1,1]));
+  x += greenshift * 2;
+  y += bitwise.writeByte(bitwise.and(green, [0,0,0,0,1,1,1,1])) * 2;
 
   return {x, y};
 }
