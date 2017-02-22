@@ -27,7 +27,7 @@ let colours = process.argv.slice(2);
 
 if (colours.length < 1) {
   colours = Object.keys(colorname).filter(name => {
-    if (/^light/.test(name) || /^dark/.test(name)) {
+    if (/^light/.test(name) || /^pale/.test(name) || /^medium/.test(name) || /^dark/.test(name)) {
       return false;
     }
     return true;
@@ -46,12 +46,13 @@ colours = colours.map(colour => {
 
 Image = Canvas.Image;
 
-let width = 512 * SCALE + SIZE + SCALE * 75;
-let height = 512 * SCALE + SIZE + 50;
+let width = 300 * SCALE + SIZE + SCALE * 75;
+let height = 300 * SCALE + SIZE + 50;
 
 canvas = new Canvas(width, height);
 ctx = canvas.getContext('2d');
-
+ctx.style = 'black';
+ctx.fillRect(0,0,width,height);
 
 for (let colour of colours) {
   let position = positionColour(colour.values[0], colour.values[1], colour.values[2]);
@@ -69,7 +70,7 @@ for (let colour of colours) {
   if (process.env.SHOW_COORDS) {
     label = colour.name + ' X: ' + x + ' Y: ' + y;
   }
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = 'white';
   ctx.fillText(label, drawXAt*SCALE + SIZE, drawYAt*SCALE + SIZE);
 }
 
